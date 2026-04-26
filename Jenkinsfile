@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11'
-            args '-u root'
-        }
-    }
+    agent any
 
     stages {
 
@@ -14,17 +9,15 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Dependencies & Test') {
             steps {
-                sh 'pip install --upgrade pip'
-                sh 'pip install -r requirements.txt'
-                sh 'pip install pytest'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh 'pytest'
+                sh '''
+                docker run --rm -v $PWD:/app -w /app python:3.11 sh -c "
+                pip install -r requirements.txt &&
+                pip install pytest &&
+                pytest
+                "
+                '''
             }
         }
 
