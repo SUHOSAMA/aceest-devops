@@ -3,12 +3,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/SUHOSAMA/aceest-devops.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh '''
