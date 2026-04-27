@@ -3,44 +3,35 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Clean') {
             steps {
-                git 'https://github.com/SUHOSAMA/aceest-devops.git'
+                deleteDir()
+            }
+        }
+
+        stage('Clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/SUHOSAMA/aceest-devops.git'
             }
         }
 
         stage('Install & Test') {
             steps {
                 sh '''
-                docker run --rm \
-                -v $(pwd):/app \
-                -w /app \
-                python:3.11 \
-                sh -c "pip install -r requirements.txt && pip install pytest && pytest"
+                python3 --version
+                pip3 --version
+
+                pip3 install --break-system-packages -r requirements.txt
+                pip3 install --break-system-packages pytest
+
+                python3 -m pytest
                 '''
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Success') {
             steps {
-                sh '''
-                docker build -t aceest-app .
-                '''
-            }
-        }
-
-        stage('Run Container') {
-            steps {
-                sh '''
-                docker rm -f aceest-container || true
-                docker run -d -p 5001:5000 --name aceest-container aceest-app
-                '''
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                echo "Quality check passed"
+                echo "BUILD SUCCESS"
             }
         }
     }
