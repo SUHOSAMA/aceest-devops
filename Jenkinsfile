@@ -5,31 +5,42 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/SUHOSAMA/aceest-devops.git'
+                git 'https://github.com/SUHOSAMA/aceest-devops.git'
             }
         }
 
-        stage('Install Dependencies & Test') {
+        stage('Install & Test') {
             steps {
                 sh '''
-                docker run --rm -v $PWD:/app -w /app python:3.11 sh -c "
-                pip install -r requirements.txt &&
-                pip install pytest &&
-                pytest
-                "
+                docker run --rm \
+                -v $(pwd):/app \
+                -w /app \
+                python:3.11 \
+                sh -c "pip install -r requirements.txt && pip install pytest && pytest"
                 '''
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t aceest-app .'
+                sh '''
+                docker build -t aceest-app .
+                '''
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                docker rm -f aceest-container || true
+                docker run -d -p 5001:5000 --name aceest-container aceest-app
+                '''
             }
         }
 
         stage('Quality Gate') {
             steps {
-                echo 'Quality check passed'
+                echo "Quality check passed"
             }
         }
     }
