@@ -1,37 +1,37 @@
-# 🚀 ACEest Fitness API – DevOps CI/CD Project
+# 🚀 ACEest Fitness API – DevOps CI/CD Implementation
+
+---
 
 ## 📌 Project Overview
 
-This project demonstrates a complete **CI/CD pipeline implementation** for a Flask-based application using modern DevOps tools. The goal is to automate build, test, containerization, and deployment using **Jenkins, Docker, and Kubernetes (Minikube)**.
+This project demonstrates a complete **CI/CD pipeline** for a Flask-based application using DevOps tools such as Jenkins, Docker, Kubernetes (Minikube), and Docker Hub.
+
+The pipeline automates:
+
+* Build
+* Test
+* Containerization
+* Deployment
 
 ---
 
-## 🏗️ Architecture (CI/CD Flow)
+## 🏗️ CI/CD Architecture
 
-```
+```text
 Developer → GitHub → Jenkins → Docker → Docker Hub → Kubernetes (Minikube)
 ```
 
-### Flow Explanation:
-
-1. Developer pushes code to GitHub
-2. Jenkins triggers pipeline
-3. Application is tested using Pytest
-4. Docker image is built
-5. Image is pushed to Docker Hub
-6. Kubernetes (Minikube) deploys the application
-
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Tools & Technologies
 
-* **Backend:** Flask (Python)
-* **CI/CD Tool:** Jenkins
-* **Containerization:** Docker
-* **Container Registry:** Docker Hub
-* **Orchestration:** Kubernetes (Minikube)
-* **Testing:** Pytest
-* **Version Control:** Git & GitHub
+* Python (Flask)
+* Jenkins (CI/CD)
+* Docker (Containerization)
+* Docker Hub (Image Registry)
+* Kubernetes – Minikube (Deployment)
+* Pytest (Testing)
+* Git & GitHub (Version Control)
 
 ---
 
@@ -55,9 +55,9 @@ aceest-devops/
 
 ---
 
-## ⚙️ Setup & Execution
+## ⚙️ Implementation Steps
 
-### 1️⃣ Clone Repository
+### 1. Clone Repository
 
 ```
 git clone https://github.com/surekha111/aceest-devops.git
@@ -66,7 +66,7 @@ cd aceest-devops
 
 ---
 
-### 2️⃣ Run Application Locally
+### 2. Run Application
 
 ```
 pip install -r requirements.txt
@@ -75,7 +75,7 @@ python app.py
 
 ---
 
-### 3️⃣ Run Tests
+### 3. Run Tests
 
 ```
 pytest
@@ -83,7 +83,7 @@ pytest
 
 ---
 
-### 4️⃣ Build Docker Image
+### 4. Docker Build
 
 ```
 docker build -t aceest-app .
@@ -91,23 +91,29 @@ docker build -t aceest-app .
 
 ---
 
-### 5️⃣ Push to Docker Hub
+### 5. Docker Hub Integration
+
+Docker image pushed with versions:
+
+* surekha111/aceest-app:latest
+* surekha111/aceest-app:v1
+* surekha111/aceest-app:v2
 
 ```
-docker tag aceest-app surekha111/aceest-app
 docker push surekha111/aceest-app
 ```
 
-🔗 Docker Hub Link:
+🔗 Docker Hub:
 https://hub.docker.com/r/surekha111/aceest-app
 
 ---
 
-### 6️⃣ Deploy using Minikube
+## ☸️ Kubernetes Deployment (Minikube – POC)
+
+### Commands:
 
 ```
 minikube start
-minikube docker-env | Invoke-Expression
 
 kubectl create deployment aceest-app --image=surekha111/aceest-app
 kubectl expose deployment aceest-app --type=NodePort --port=5000
@@ -117,92 +123,88 @@ minikube service aceest-app
 
 ---
 
-## ✅ Application Output
+## 🌐 Endpoint URL
 
-When accessed via browser:
+Application successfully deployed and accessed via:
 
 ```
-{
-  "message": "ACEest Fitness API is running"
-}
+http://127.0.0.1:50526
 ```
 
 ---
 
-## 🔁 Jenkins Pipeline
+## 🔁 Deployment Strategy
 
-The Jenkins pipeline automates:
+* Deployment: Kubernetes Deployment
+* Service: NodePort
+* Rolling Update: Supported using `kubectl set image`
+
+---
+
+## 🔄 Jenkins CI/CD Pipeline
+
+Jenkins pipeline includes:
 
 * Code checkout
 * Dependency installation
-* Running tests
-* Docker image build
-* Deployment steps
+* Pytest execution
+* Docker build
+* Deployment
 
-Pipeline is defined in:
-
-```
-Jenkinsfile
-```
+Pipeline executed successfully for latest commits.
 
 ---
 
-##  Testing
+## 🧪 Testing
 
-* Implemented using **Pytest**
-* Ensures application reliability before deployment
-
----
-
-##  Deployment Strategy
-
-* **POC Deployment:** Minikube (Local Kubernetes)
-* **Production Strategy:** Docker Hub + Cloud Kubernetes (AWS/EKS concept)
+* Implemented using Pytest
+* All test cases passed successfully
 
 ---
 
-## ⚠️ Challenges Faced & Solutions
+## 📊 SonarQube Code Quality
 
-| Challenge                            | Solution                                |
-| ------------------------------------ | --------------------------------------- |
-| Docker daemon not connecting         | Restarted Docker Desktop                |
-| ImagePullBackOff error               | Pushed image to Docker Hub              |
-| Minikube slow startup                | Allowed time for cluster initialization |
-| PowerShell command issues            | Used correct syntax and quoting         |
-| Kubernetes not detecting local image | Used Docker Hub image instead           |
+SonarQube integration was designed for static code analysis to ensure:
 
----
+* Code quality
+* Maintainability
+* Bug detection
 
-##  Key Outcomes
-
-* Automated CI/CD pipeline using Jenkins
-* Containerized application using Docker
-* Deployed application using Kubernetes
-* Successfully exposed service using Minikube
-* Verified application via browser
+Due to environment constraints, analysis is demonstrated conceptually along with clean code practices and testing validation.
 
 ---
 
-## 📸 Proof of Execution
+## 🚀 Key Outcomes
 
-Screenshots included in submission document:
-
-* Jenkins pipeline execution
-* Docker image build
-* Docker Hub repository
+* Automated CI/CD pipeline
+* Containerized application
 * Kubernetes deployment
-* Application running in browser
+* Public Docker image
+* Verified endpoint output
 
 ---
 
-## 🔗 GitHub Repository
+## 📸 Proof
+
+Screenshots included in submission:
+
+* Jenkins build success
+* Docker image push
+* Kubernetes pods running
+* Application output
+
+---
+
+## 🔗 Repository Access
+
+This repository is public and accessible:
 
 https://github.com/surekha111/aceest-devops
 
 ---
 
-##  Conclusion
+## 📌 Conclusion
 
-This project successfully demonstrates an end-to-end DevOps pipeline integrating **CI/CD, containerization, and orchestration**, fulfilling all assignment requirements.
+The project successfully demonstrates a complete DevOps lifecycle with CI/CD automation, containerization, and Kubernetes deployment fulfilling all assignment requirements.
 
 ---
